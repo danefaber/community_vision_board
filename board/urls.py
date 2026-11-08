@@ -8,4 +8,9 @@ urlpatterns = [
         views.report_post,
         name="report_post",
     ),
+    path(
+        "posts/edit/<uuid:token>/",
+        views.edit_post,
+        name="edit_post",
+    ),
 ]

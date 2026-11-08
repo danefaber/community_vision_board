@@ -19,11 +19,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv()
 
 
+RECAPTCHA_SITE_KEY = os.getenv("RECAPTCHA_SITE_KEY", "")
+RECAPTCHA_SECRET_KEY = os.getenv("RECAPTCHA_SECRET_KEY", "")
+
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-b(av1wen=8c%4_6!i3z@nesfbj5*u8z3^lfh666f4=_10k=r#r'
+SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -84,7 +89,7 @@ DATABASES = {
         'PASSWORD': os.getenv('DB_PASSWORD'),
         'HOST': os.getenv('DB_HOST'),
         'PORT': os.getenv('DB_PORT'),
-    }
+   }
 }
 
 

@@ -1,4 +1,5 @@
 
+import uuid
 from django.db import models
 
 
@@ -38,6 +39,11 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateTimeField(null=True, blank=True)
 
+    edit_token = models.UUIDField(
+       default=uuid.uuid4,
+       unique=True,
+       editable=False,
+)
     def __str__(self):
         return self.title
 
@@ -102,3 +108,18 @@ class Subscriber(models.Model):
 
     def __str__(self):
         return self.email
+
+class PostSubmissionRecord(models.Model):
+    ip_hash = models.CharField(max_length=64)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=["ip_hash", "created_at"]),
+        ]
+
+class PostSubmissionLock(models.Model):
+    ip_hash = models.CharField(
+        max_length=64,
+        unique=True,
+    )
