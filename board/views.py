@@ -1,9 +1,10 @@
 from django.contrib import messages
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_http_methods
 
 from .edit_forms import PostEditForm
-from .models import Post
+from .models import Event, Post
 from .report_forms import PostReportForm
 
 @require_http_methods(["GET", "POST"])
@@ -87,3 +88,21 @@ def edit_post(request, token):
 
 def calendar_page(request):
     return render(request, "board/calendar.html")
+
+
+def calendar_events(request):
+    # Only events whose post is approved
+    events = Event.objects.filter(post__status="approved").select_related("post")
+
+    data = []
+    for event in events:
+        item = {
+            "id": event.pk,
+            "title": event.post.title,
+            "start": event.start_time.isoformat(),
+        }
+        if event.end_time:
+            item["end"] = event.end_time.isoformat()
+        data.append(item)
+
+    return JsonResponse(data, safe=False)
