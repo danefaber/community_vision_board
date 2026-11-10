@@ -83,3 +83,7 @@ def edit_post(request, token):
             "form": form,
         }
     )
+
+
+def calendar_page(request):
+    return render(request, "board/calendar.html")

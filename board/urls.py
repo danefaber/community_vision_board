@@ -14,4 +14,5 @@ urlpatterns = [
         views.edit_post,
         name="edit_post",
     ),
+    path("calendar/", views.calendar_page, name="calendar"),
 ]
