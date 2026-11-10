@@ -1,0 +1,362 @@
+[
+  {
+    "model": "board.category",
+    "pk": 1,
+    "fields": {
+      "name": "Volunteering",
+      "description": "Ways to help out around Valentine."
+    }
+  },
+  {
+    "model": "board.category",
+    "pk": 2,
+    "fields": {
+      "name": "Help Wanted",
+      "description": "Jobs and odd jobs looking for a hand."
+    }
+  },
+  {
+    "model": "board.category",
+    "pk": 3,
+    "fields": {
+      "name": "Lost Pets",
+      "description": "Lost and found animals."
+    }
+  },
+  {
+    "model": "board.category",
+    "pk": 4,
+    "fields": {
+      "name": "Gatherings",
+      "description": "Community meetups, events, and get-togethers."
+    }
+  },
+  {
+    "model": "board.post",
+    "pk": 1,
+    "fields": {
+      "title": "Park Cleanup Saturday",
+      "description": "Bring gloves and a water bottle. Trash bags and snacks provided. All ages welcome!",
+      "category": 1,
+      "location": "Valentine City Park",
+      "contact_name": "Maria Lopez",
+      "contact_email": "maria.lopez@example.com",
+      "status": "approved",
+      "created_at": "2026-11-02T09:15:00-06:00",
+      "expires_at": "2026-11-15T23:59:00-06:00",
+      "edit_token": "11111111-1111-4111-8111-000000000001"
+    }
+  },
+  {
+    "model": "board.post",
+    "pk": 2,
+    "fields": {
+      "title": "Holiday Food Drive Volunteers",
+      "description": "We need help sorting and packing donated food for families this season. Shifts are 2 hours.",
+      "category": 1,
+      "location": "Valentine Community Center",
+      "contact_name": "Food Pantry Team",
+      "contact_email": "pantry@example.com",
+      "status": "approved",
+      "created_at": "2026-11-03T14:30:00-06:00",
+      "expires_at": "2026-12-20T23:59:00-06:00",
+      "edit_token": "11111111-1111-4111-8111-000000000002"
+    }
+  },
+  {
+    "model": "board.post",
+    "pk": 3,
+    "fields": {
+      "title": "Snow Shoveling Help Needed",
+      "description": "Looking for someone to shovel my driveway and sidewalk after storms this winter. Will pay $20 per visit.",
+      "category": 2,
+      "location": "Near 4th St and Hall St",
+      "contact_name": "Bob Hansen",
+      "contact_email": "bob.hansen@example.com",
+      "status": "approved",
+      "created_at": "2026-11-04T08:00:00-06:00",
+      "expires_at": null,
+      "edit_token": "11111111-1111-4111-8111-000000000003"
+    }
+  },
+  {
+    "model": "board.post",
+    "pk": 4,
+    "fields": {
+      "title": "Part-Time Help at the Feed Store",
+      "description": "Weekend help loading orders and stocking shelves. Must be able to lift 50 lbs.",
+      "category": 2,
+      "location": "Main Street",
+      "contact_name": "Store Manager",
+      "contact_email": "hiring@example.com",
+      "status": "approved",
+      "created_at": "2026-11-05T11:45:00-06:00",
+      "expires_at": "2026-12-05T23:59:00-06:00",
+      "edit_token": "11111111-1111-4111-8111-000000000004"
+    }
+  },
+  {
+    "model": "board.post",
+    "pk": 5,
+    "fields": {
+      "title": "Lost Dog: Brown Lab Named Rusty",
+      "description": "Rusty got out of our yard Sunday evening. Very friendly, red collar, no tags. Please call or email if you see him!",
+      "category": 3,
+      "location": "Near Main St and Cherry St",
+      "contact_name": "Jenna Carlson",
+      "contact_email": "jenna.carlson@example.com",
+      "status": "approved",
+      "created_at": "2026-11-08T19:20:00-06:00",
+      "expires_at": null,
+      "edit_token": "11111111-1111-4111-8111-000000000005"
+    }
+  },
+  {
+    "model": "board.post",
+    "pk": 6,
+    "fields": {
+      "title": "Found Cat Near the Library",
+      "description": "Gray tabby, very sweet, no collar. Keeping him safe until we find the owner.",
+      "category": 3,
+      "location": "Valentine Public Library",
+      "contact_name": "Tom Becker",
+      "contact_email": "tom.becker@example.com",
+      "status": "approved",
+      "created_at": "2026-11-09T10:05:00-06:00",
+      "expires_at": null,
+      "edit_token": "11111111-1111-4111-8111-000000000006"
+    }
+  },
+  {
+    "model": "board.post",
+    "pk": 7,
+    "fields": {
+      "title": "Community Potluck Night",
+      "description": "Bring a dish to share and meet your neighbors! Plates and drinks provided.",
+      "category": 4,
+      "location": "Valentine Community Center",
+      "contact_name": "Parks & Rec",
+      "contact_email": "parksrec@example.com",
+      "status": "approved",
+      "created_at": "2026-11-01T16:00:00-06:00",
+      "expires_at": "2026-11-21T23:59:00-06:00",
+      "edit_token": "11111111-1111-4111-8111-000000000007"
+    }
+  },
+  {
+    "model": "board.post",
+    "pk": 8,
+    "fields": {
+      "title": "High School Fall Concert",
+      "description": "The band and choir are performing their fall concert. Free and open to the public.",
+      "category": 4,
+      "location": "Valentine High School Auditorium",
+      "contact_name": "Music Boosters",
+      "contact_email": "boosters@example.com",
+      "status": "approved",
+      "created_at": "2026-11-02T12:00:00-06:00",
+      "expires_at": "2026-11-21T23:59:00-06:00",
+      "edit_token": "11111111-1111-4111-8111-000000000008"
+    }
+  },
+  {
+    "model": "board.post",
+    "pk": 9,
+    "fields": {
+      "title": "Winter Coat Drive",
+      "description": "Collecting gently used coats, hats, and gloves for kids. Drop-off bins at the library.",
+      "category": 1,
+      "location": "Valentine Public Library",
+      "contact_name": "Sarah Nguyen",
+      "contact_email": "sarah.nguyen@example.com",
+      "status": "pending",
+      "created_at": "2026-11-09T20:10:00-06:00",
+      "expires_at": "2026-12-15T23:59:00-06:00",
+      "edit_token": "11111111-1111-4111-8111-000000000009"
+    }
+  },
+  {
+    "model": "board.post",
+    "pk": 10,
+    "fields": {
+      "title": "Babysitter Needed Weekday Evenings",
+      "description": "Looking for a reliable sitter for two kids, ages 5 and 8, Tuesday and Thursday evenings.",
+      "category": 2,
+      "location": "West side of town",
+      "contact_name": "Amy Fischer",
+      "contact_email": "amy.fischer@example.com",
+      "status": "pending",
+      "created_at": "2026-11-09T21:00:00-06:00",
+      "expires_at": null,
+      "edit_token": "11111111-1111-4111-8111-000000000010"
+    }
+  },
+  {
+    "model": "board.post",
+    "pk": 11,
+    "fields": {
+      "title": "Trivia Night Fundraiser",
+      "description": "Teams of up to 6. Proceeds go to the library's new kids' reading corner.",
+      "category": 4,
+      "location": "Cherry County Fairgrounds Hall",
+      "contact_name": "Library Friends",
+      "contact_email": "libraryfriends@example.com",
+      "status": "pending",
+      "created_at": "2026-11-09T21:30:00-06:00",
+      "expires_at": "2026-12-05T23:59:00-06:00",
+      "edit_token": "11111111-1111-4111-8111-000000000011"
+    }
+  },
+  {
+    "model": "board.post",
+    "pk": 12,
+    "fields": {
+      "title": "FREE MONEY CLICK HERE",
+      "description": "Make $5000 a week from home!!!",
+      "category": 2,
+      "location": "",
+      "contact_name": "",
+      "contact_email": "spam@example.com",
+      "status": "rejected",
+      "created_at": "2026-11-07T03:00:00-06:00",
+      "expires_at": null,
+      "edit_token": "11111111-1111-4111-8111-000000000012"
+    }
+  },
+  {
+    "model": "board.event",
+    "pk": 1,
+    "fields": {
+      "post": 1,
+      "start_time": "2026-11-14T09:00:00-06:00",
+      "end_time": "2026-11-14T12:00:00-06:00"
+    }
+  },
+  {
+    "model": "board.event",
+    "pk": 2,
+    "fields": {
+      "post": 2,
+      "start_time": "2026-11-19T17:00:00-06:00",
+      "end_time": "2026-11-19T19:00:00-06:00"
+    }
+  },
+  {
+    "model": "board.event",
+    "pk": 3,
+    "fields": {
+      "post": 7,
+      "start_time": "2026-11-21T18:00:00-06:00",
+      "end_time": "2026-11-21T20:30:00-06:00"
+    }
+  },
+  {
+    "model": "board.event",
+    "pk": 4,
+    "fields": {
+      "post": 8,
+      "start_time": "2026-11-21T19:00:00-06:00",
+      "end_time": "2026-11-21T20:30:00-06:00"
+    }
+  },
+  {
+    "model": "board.event",
+    "pk": 5,
+    "fields": {
+      "post": 9,
+      "start_time": "2026-11-28T10:00:00-06:00",
+      "end_time": null
+    }
+  },
+  {
+    "model": "board.event",
+    "pk": 6,
+    "fields": {
+      "post": 11,
+      "start_time": "2026-12-04T19:00:00-06:00",
+      "end_time": "2026-12-04T21:00:00-06:00"
+    }
+  },
+  {
+    "model": "board.volunteersignup",
+    "pk": 1,
+    "fields": {
+      "post": 1,
+      "name": "Chris Olson",
+      "email": "chris.olson@example.com",
+      "message": "I can bring extra rakes.",
+      "created_at": "2026-11-05T18:00:00-06:00"
+    }
+  },
+  {
+    "model": "board.volunteersignup",
+    "pk": 2,
+    "fields": {
+      "post": 1,
+      "name": "Priya Patel",
+      "email": "priya.patel@example.com",
+      "message": "",
+      "created_at": "2026-11-06T12:30:00-06:00"
+    }
+  },
+  {
+    "model": "board.volunteersignup",
+    "pk": 3,
+    "fields": {
+      "post": 2,
+      "name": "Luke Meyer",
+      "email": "luke.meyer@example.com",
+      "message": "Free Thursday afternoons.",
+      "created_at": "2026-11-07T09:45:00-06:00"
+    }
+  },
+  {
+    "model": "board.postreport",
+    "pk": 1,
+    "fields": {
+      "post": 3,
+      "reason": "Suspicious payment offer",
+      "details": "Asked me to pay a deposit before starting.",
+      "status": "pending",
+      "created_at": "2026-11-09T13:00:00-06:00"
+    }
+  },
+  {
+    "model": "board.postreport",
+    "pk": 2,
+    "fields": {
+      "post": 6,
+      "reason": "Duplicate post",
+      "details": "",
+      "status": "dismissed",
+      "created_at": "2026-11-09T15:00:00-06:00"
+    }
+  },
+  {
+    "model": "board.subscriber",
+    "pk": 1,
+    "fields": {
+      "email": "subscriber1@example.com",
+      "active": true,
+      "created_at": "2026-10-30T10:00:00-06:00"
+    }
+  },
+  {
+    "model": "board.subscriber",
+    "pk": 2,
+    "fields": {
+      "email": "subscriber2@example.com",
+      "active": true,
+      "created_at": "2026-11-01T10:00:00-06:00"
+    }
+  },
+  {
+    "model": "board.subscriber",
+    "pk": 3,
+    "fields": {
+      "email": "unsubscribed@example.com",
+      "active": false,
+      "created_at": "2026-10-25T10:00:00-06:00"
+    }
+  }
+]
