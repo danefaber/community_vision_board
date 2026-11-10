@@ -8,7 +8,7 @@ from .models import (
     PostReport,
     Subscriber,
 )
-
+from django.template.response import TemplateResponse
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -71,11 +71,6 @@ class PostAdmin(admin.ModelAdmin):
                 level="warning",
             )
 
-class PostAdmin(admin.ModelAdmin):
-    list_display = ("title", "category", "status", "created_at")
-    list_filter = ("category", "status")
-    search_fields = ("title", "description", "location")
-    list_editable = ("status",)
 
 
 @admin.register(Event)
@@ -88,10 +83,93 @@ class VolunteerSignupAdmin(admin.ModelAdmin):
     list_display = ("name", "post", "email", "created_at")
 
 
+
 @admin.register(PostReport)
 class PostReportAdmin(admin.ModelAdmin):
     list_display = ("post", "reason", "status", "created_at")
     list_filter = ("status",)
+    readonly_fields = ("post", "reason", "details", "status", "created_at")
+    actions = ("dismiss_reports", "hide_reported_posts")
+
+    @admin.action(description="Dismiss reports (keep posts visible)")
+    def dismiss_reports(self, request, queryset):
+        reports = queryset.filter(status="pending")
+        count = 0
+
+        for report in reports:
+            report.status = "dismissed"
+            report.save(update_fields=["status"])
+            self.log_change(request, report, "Dismissed report.")
+            count += 1
+
+        if count:
+            self.message_user(
+                request,
+                f"{count} report(s) dismissed.",
+                level="success",
+            )
+        else:
+            self.message_user(
+                request,
+                "No pending reports were selected.",
+                level="warning",
+            )
+
+    @admin.action(description="Hide reported posts (remove from public view)")
+    def hide_reported_posts(self, request, queryset):
+        reports = queryset.filter(status="pending")
+
+        if not reports.exists():
+            self.message_user(
+                request,
+                "No pending reports were selected.",
+                level="warning",
+            )
+            return
+
+        if request.POST.get("confirm_hide") != "yes":
+            return TemplateResponse(
+                request,
+                "admin/board/postreport/confirm_hide.html",
+                {
+                    **self.admin_site.each_context(request),
+                    "title": "Confirm hiding reported posts",
+                    "opts": self.model._meta,
+                    "reports": reports.select_related("post"),
+                },
+            )
+
+        count = 0
+
+        for report in reports:
+            post = report.post
+
+            if post.status == "approved":
+                post.status = "rejected"
+                post.save(update_fields=["status"])
+                self.log_change(
+                    request,
+                    report,
+                    "Moderator hid the reported post.",
+                )
+
+            report.status = "reviewed"
+            report.save(update_fields=["status"])
+            count += 1
+
+        if count:
+            self.message_user(
+                request,
+                f"{count} report(s) reviewed.",
+                level="success",
+            )
+        else:
+            self.message_user(
+                request,
+                "No pending reports were selected.",
+                level="warning",
+            )
+
 
 
 @admin.register(Subscriber)
