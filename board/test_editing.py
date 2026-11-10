@@ -25,7 +25,7 @@ class PrivatePostEditingTests(TestCase):
         )
 
         self.url = reverse(
-            "edit_post",
+            "board:edit_post",
             kwargs={"token": self.post.edit_token},
         )
 
@@ -49,7 +49,7 @@ class PrivatePostEditingTests(TestCase):
 
     def test_invalid_edit_link(self):
         invalid_url = reverse(
-            "edit_post",
+            "board:edit_post",
             kwargs={"token": uuid.uuid4()},
         )
 
@@ -124,7 +124,7 @@ class PrivatePostEditingTests(TestCase):
         self.post.save(update_fields=["edit_token"])
 
         new_url = reverse(
-            "edit_post",
+            "board:edit_post",
             kwargs={"token": self.post.edit_token},
         )
 

@@ -70,7 +70,7 @@ def edit_post(request, token):
                     "No changes were made."
                 )
 
-            return redirect("edit_post", token=post.edit_token)
+            return redirect("board:edit_post", token=post.edit_token)
 
     else:
         form = PostEditForm(instance=post)
