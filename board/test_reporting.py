@@ -21,7 +21,7 @@ class PostReportingTests(TestCase):
         )
 
     def test_report_approved_post(self):
-        url = reverse("report_post", args=[self.post.pk])
+        url = reverse("board:report_post", args=[self.post.pk])
 
         response = self.client.post(
             url,
@@ -43,7 +43,7 @@ class PostReportingTests(TestCase):
         self.assertEqual(self.post.status, "approved")
 
     def test_cannot_report_unapproved_posts(self):
-        url = reverse("report_post", args=[self.post.pk])
+        url = reverse("board:report_post", args=[self.post.pk])
 
         for status in ("pending", "rejected"):
             self.post.status = status
