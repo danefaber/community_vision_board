@@ -4,11 +4,14 @@ from . import views
 app_name = 'board'
 
 urlpatterns = [
-   path(
-       "posts/<int:post_id>/report/",
-       views.report_post,
-       name="report_post",
-   ),
-   # path('', views.home, name='home'),                  # Neil
-   # path('calendar/', views.calendar, name='calendar'), # Joey
+    path(
+        "posts/<int:post_id>/report/",
+        views.report_post,
+        name="report_post",
+    ),
+    path(
+        "posts/edit/<uuid:token>/",
+        views.edit_post,
+        name="edit_post",
+    ),
 ]

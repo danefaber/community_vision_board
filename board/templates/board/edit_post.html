@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Post - Community Vision Board</title>
+</head>
+<body>
+    <h1>Edit Your Post</h1>
+
+    <p>
+        Update your post information below.
+        Changes will be sent to a moderator for approval
+        before appearing publicly.
+    </p>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit">Save Changes</button>
+    </form>
+
+    <p>
+        Keep your private edit link safe.
+        Anyone with the link can edit this post.
+    </p>
+</body>
+</html>
