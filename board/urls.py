@@ -5,6 +5,11 @@ app_name = 'board'
 
 urlpatterns = [
     path(
+        "",
+        views.home,
+        name="home",
+    ),
+    path(
         "posts/<int:post_id>/report/",
         views.report_post,
         name="report_post",

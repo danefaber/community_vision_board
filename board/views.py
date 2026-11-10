@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_http_methods
 
 from .edit_forms import PostEditForm
-from .models import Post
+from .models import Post, Category
 from .report_forms import PostReportForm
 
 @require_http_methods(["GET", "POST"])
@@ -81,5 +81,23 @@ def edit_post(request, token):
         {
             "post": post,
             "form": form,
+        }
+    )
+
+def home(request):
+    # Get approved posts, newest first
+    posts = Post.objects.filter(
+        status="approved"
+    ).order_by("-created_at")
+
+    # Get all categories
+    categories = Category.objects.all()
+
+    return render(
+        request,
+        "board/home.html",
+        {
+            "posts": posts,
+            "categories": categories,
         }
     )

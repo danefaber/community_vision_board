@@ -1,0 +1,57 @@
+{% extends "board/base.html" %}
+
+{% block content %}
+
+<h1>Community Vision Board</h1>
+
+<p>
+    Welcome to the Community Vision Board!
+    Browse community posts, events, and opportunities.
+</p>
+
+<h2>Categories</h2>
+
+<ul>
+    {% for category in categories %}
+        <li>{{ category.name }}</li>
+    {% empty %}
+        <li>No categories available.</li>
+    {% endfor %}
+</ul>
+
+<h2>Community Posts</h2>
+
+{% for post in posts %}
+
+    <div class="post">
+        <h3>{{ post.title }}</h3>
+
+        <p>{{ post.description }}</p>
+
+        <p>
+            <strong>Category:</strong>
+            {{ post.category.name }}
+        </p>
+
+        {% if post.location %}
+            <p>
+                <strong>Location:</strong>
+                {{ post.location }}
+            </p>
+        {% endif %}
+
+        <p>
+            <strong>Posted:</strong>
+            {{ post.created_at|date:"M d, Y" }}
+        </p>
+
+        <hr>
+    </div>
+
+{% empty %}
+
+    <p>No approved posts are available yet.</p>
+
+{% endfor %}
+
+{% endblock %}
