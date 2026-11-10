@@ -19,6 +19,9 @@ def remember_old_status(sender, instance, **kwargs):
 @receiver(post_save, sender=Post)
 def notify_subscribers_on_approval(sender, instance, created, **kwargs):
     """After a post is saved, email active subscribers if it was just approved."""
+    if kwargs.get("raw"):
+        return  # skip when loading fixtures
+    
     just_approved = instance.status == "approved" and instance._old_status != "approved"
     if not just_approved:
         return
