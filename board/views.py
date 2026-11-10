@@ -101,3 +101,21 @@ def home(request):
             "categories": categories,
         }
     )
+def category_posts(request, category_id):
+    # Find the selected category
+    category = get_object_or_404(Category, pk=category_id)
+
+    # Get approved posts in this category
+    posts = Post.objects.filter(
+        category=category,
+        status="approved"
+    ).order_by("-created_at")
+
+    return render(
+        request,
+        "board/category_posts.html",
+        {
+            "category": category,
+            "posts": posts,
+        }
+    )

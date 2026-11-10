@@ -13,7 +13,11 @@
 
 <ul>
     {% for category in categories %}
-        <li>{{ category.name }}</li>
+        <li>
+            <a href="{% url 'board:category_posts' category.id %}">
+                {{ category.name }}
+            </a>
+        </li>
     {% empty %}
         <li>No categories available.</li>
     {% endfor %}

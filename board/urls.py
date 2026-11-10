@@ -19,4 +19,9 @@ urlpatterns = [
         views.edit_post,
         name="edit_post",
     ),
+    path(
+    "categories/<int:category_id>/",
+    views.category_posts,
+    name="category_posts",
+    ),
 ]
