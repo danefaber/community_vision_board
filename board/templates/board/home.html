@@ -1,88 +1,109 @@
+
 {% extends "board/base.html" %}
+
+{% block title %}Home | Community Vision Board{% endblock %}
 
 {% block content %}
 
-<h1>Community Vision Board</h1>
+<div class="content-card">
 
-<p>
-    Welcome to the Community Vision Board!
-    Browse community posts, events, and opportunities.
+    <h1>Welcome to Your Community Board</h1>
+
+    <p>
+        Browse community posts, events, and opportunities.
+        Stay connected with what's happening in your community.
+    </p>
+
+    <p style="display: flex; gap: 12px; flex-wrap: wrap;">
+    <a class="btn" href="{% url 'board:calendar' %}">
+        Community Calendar
+    </a>
+
+    <a class="btn" href="{% url 'board:subscribe' %}">
+        Get Email Updates
+    </a>
 </p>
 
-<p>
-    <a href="{% url 'board:submit_post' %}">Create a Post</a>
-    |
-    <a href="{% url 'board:calendar' %}">Community Calendar</a>
-    |
-    <a href="{% url 'board:subscribe' %}">Get email updates</a>
-</p>
+</div>
 
-<h2>Categories</h2>
+<section style="margin-top: 30px;">
 
-<ul>
-    {% for category in categories %}
-        <li>
-            <a href="{% url 'board:category_posts' category.id %}">
-                {{ category.name }}
-            </a>
-        </li>
-    {% empty %}
-        <li>No categories available.</li>
-    {% endfor %}
-</ul>
+    <h2>Categories</h2>
 
-<h2>Community Posts</h2>
-
-{% for post in posts %}
-
-    <div class="post">
-        <h3>{{ post.title }}</h3>
-
-        <p>{{ post.description }}</p>
-
-        <p>
-            <strong>Category:</strong>
-            {{ post.category.name }}
-        </p>
-
-        {% if post.location %}
-            <p>
-                <strong>Location:</strong>
-                {{ post.location }}
-            </p>
-        {% endif %}
-
-        <p>
-            <strong>Contact:</strong>
-            {% if post.contact_method == "email" %}
-                <a href="mailto:{{ post.contact_email }}">
-                    {{ post.contact_email }}
-                </a>
-            {% elif post.contact_method == "phone" %}
-                <a href="tel:{{ post.contact_phone }}">
-                    {{ post.contact_phone }}
-                </a>
-            {% endif %}
-        </p>
-
-        <p>
-            <a href="{% url 'board:report_post' post.id %}">
-                Report this post
-            </a>
-        </p>
-
-        <p>
-            <strong>Posted:</strong>
-            {{ post.created_at|date:"M d, Y" }}
-        </p>
-
-        <hr>
+    <div class="content-card">
+        <ul>
+            {% for category in categories %}
+                <li>
+                    <a href="{% url 'board:category_posts' category.id %}">
+                        {{ category.name }}
+                    </a>
+                </li>
+            {% empty %}
+                <li>No categories available.</li>
+            {% endfor %}
+        </ul>
     </div>
 
-{% empty %}
+</section>
 
-    <p>No approved posts are available yet.</p>
+<section style="margin-top: 30px;">
 
-{% endfor %}
+    <h2>Community Posts</h2>
+
+    {% for post in posts %}
+
+        <div class="content-card" style="margin-bottom: 20px;">
+
+            <h3>{{ post.title }}</h3>
+
+            <p>{{ post.description }}</p>
+
+            <p>
+                <strong>Category:</strong>
+                {{ post.category.name }}
+            </p>
+
+            {% if post.location %}
+                <p>
+                    <strong>Location:</strong>
+                    {{ post.location }}
+                </p>
+            {% endif %}
+
+            <p>
+                <strong>Contact:</strong>
+                {% if post.contact_method == "email" %}
+                    <a href="mailto:{{ post.contact_email }}">
+                        {{ post.contact_email }}
+                    </a>
+                {% elif post.contact_method == "phone" %}
+                    <a href="tel:{{ post.contact_phone }}">
+                        {{ post.contact_phone }}
+                    </a>
+                {% endif %}
+            </p>
+
+            <p>
+                <a href="{% url 'board:report_post' post.id %}">
+                    Report this post
+                </a>
+            </p>
+
+            <p>
+                <strong>Posted:</strong>
+                {{ post.created_at|date:"M d, Y" }}
+            </p>
+
+        </div>
+
+    {% empty %}
+
+        <div class="content-card">
+            <p>No approved posts are available yet.</p>
+        </div>
+
+    {% endfor %}
+
+</section>
 
 {% endblock %}

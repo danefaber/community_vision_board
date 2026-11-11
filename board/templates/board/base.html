@@ -1,19 +1,178 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}Community Vision Board{% endblock %}</title>
-</head>
-<body>
-  <main>
-    {% if messages %}
-      {% for message in messages %}
-        <p>{{ message }}</p>
-      {% endfor %}
-    {% endif %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    {% block content %}{% endblock %}
-  </main>
+    <title>{% block title %}Community Vision Board{% endblock %}</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f4f6f9;
+            color: #263445;
+            line-height: 1.6;
+        }
+
+        /* Navigation bar */
+        .navbar {
+            background-color: #172b45;
+            color: white;
+            padding: 16px 0;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+        }
+
+        .nav-container {
+            max-width: 1150px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #8ecdf0;
+        }
+
+        .nav-links .create-link {
+            background-color: #2878b5;
+            padding: 9px 16px;
+            border-radius: 6px;
+        }
+
+        .nav-links .create-link:hover {
+            background-color: #1d5d8d;
+            color: white;
+        }
+
+        /* Main page content */
+        main {
+            max-width: 1150px;
+            margin: 35px auto;
+            padding: 0 24px;
+            min-height: 65vh;
+        }
+
+        /* Django messages */
+        .messages {
+            margin-bottom: 20px;
+        }
+
+        .message {
+            background-color: #e5f3fc;
+            border-left: 4px solid #2878b5;
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        /* Shared content styling */
+        .content-card {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        button, .btn {
+            background-color: #2878b5;
+            color: white;
+            border: none;
+            padding: 11px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        button:hover, .btn:hover {
+            background-color: #1d5d8d;
+        }
+
+        a {
+            color: #2878b5;
+        }
+
+        /* Mobile layout */
+        @media (max-width: 600px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 14px;
+            }
+
+            .nav-links {
+                gap: 18px;
+            }
+
+            main {
+                margin-top: 24px;
+                padding: 0 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+
+            <a class="brand" href="{% url 'board:home' %}">
+                Community Vision Board
+            </a>
+
+            <div class="nav-links">
+                <a href="{% url 'board:home' %}">Home</a>
+
+                <a class="create-link" href="{% url 'board:submit_post' %}">
+                    Create a post
+                </a>
+            </div>
+
+        </div>
+    </nav>
+
+    <main>
+
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="message">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+
+    </main>
+
 </body>
 </html>
