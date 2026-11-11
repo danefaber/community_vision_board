@@ -1,4 +1,3 @@
-
 from django import forms
 
 from .models import Post
@@ -14,4 +13,6 @@ class PostEditForm(forms.ModelForm):
             "location",
             "contact_name",
             "contact_email",
+            "contact_method",
+            "contact_phone",
         ]
