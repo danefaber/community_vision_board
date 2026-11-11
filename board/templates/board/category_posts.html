@@ -27,6 +27,25 @@
         {% endif %}
 
         <p>
+            <strong>Contact:</strong>
+            {% if post.contact_method == "email" %}
+                <a href="mailto:{{ post.contact_email }}">
+                    {{ post.contact_email }}
+                </a>
+            {% elif post.contact_method == "phone" %}
+                <a href="tel:{{ post.contact_phone }}">
+                    {{ post.contact_phone }}
+                </a>
+            {% endif %}
+        </p>
+
+        <p>
+            <a href="{% url 'board:report_post' post.id %}">
+                Report this post
+            </a>
+        </p>
+
+        <p>
             <strong>Posted:</strong>
             {{ post.created_at|date:"M d, Y" }}
         </p>
