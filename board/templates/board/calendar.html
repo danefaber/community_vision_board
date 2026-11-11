@@ -5,6 +5,7 @@
 <p>Approved community events. Click an event to see the full post.</p>
 
 <div id="calendar"></div>
+
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.22/index.global.min.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", function () {
@@ -12,7 +13,14 @@
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: "dayGridMonth",
-      events: "{% url 'board:calendar_events' %}"
+      height: "auto",
+      headerToolbar: {
+        left: "prev,next today",
+        center: "title",
+        right: "dayGridMonth,timeGridWeek,listMonth"
+      },
+      events: "{% url 'board:calendar_events' %}",
+      noEventsContent: "No approved events yet."
     });
 
     calendar.render();
