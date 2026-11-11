@@ -1,0 +1,43 @@
+{% extends "board/base.html" %}
+
+{% block content %}
+
+<h1>{{ category.name }}</h1>
+
+{% if category.description %}
+    <p>{{ category.description }}</p>
+{% endif %}
+
+<a href="{% url 'board:home' %}">Back to Home</a>
+
+<h2>Posts in this Category</h2>
+
+{% for post in posts %}
+
+    <div class="post">
+        <h3>{{ post.title }}</h3>
+
+        <p>{{ post.description }}</p>
+
+        {% if post.location %}
+            <p>
+                <strong>Location:</strong>
+                {{ post.location }}
+            </p>
+        {% endif %}
+
+        <p>
+            <strong>Posted:</strong>
+            {{ post.created_at|date:"M d, Y" }}
+        </p>
+
+        <hr>
+    </div>
+
+{% empty %}
+
+    <p>No approved posts in this category yet.</p>
+
+{% endfor %}
+
+{% endblock %}
