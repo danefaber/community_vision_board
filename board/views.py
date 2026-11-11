@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import NoReverseMatch, reverse
 from django.views.decorators.http import require_http_methods
 
 from .edit_forms import PostEditForm
@@ -103,6 +104,11 @@ def calendar_events(request):
         }
         if event.end_time:
             item["end"] = event.end_time.isoformat()
+        # Link to Neil's post detail page (skipped until his page is merged)
+        try:
+            item["url"] = reverse("board:post_detail", args=[event.post.id])
+        except NoReverseMatch:
+            pass
         data.append(item)
 
     return JsonResponse(data, safe=False)
