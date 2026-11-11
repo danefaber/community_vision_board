@@ -33,7 +33,7 @@ def report_post(request, post_id):
                 "Your report was submitted for moderator review."
             )
 
-            return redirect("board:report_post", post_id=post.pk)
+            return redirect("board:home")
 
     else:
         form = PostReportForm()
