@@ -1,6 +1,8 @@
 from django.contrib import messages
+from django.http import JsonResponse
 from django.conf import settings
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import NoReverseMatch, reverse
 from django.views.decorators.http import require_http_methods
 
 from .edit_forms import PostEditForm
@@ -90,6 +92,34 @@ def edit_post(request, token):
         }
     )
 
+
+def calendar_page(request):
+    return render(request, "board/calendar.html")
+
+
+def calendar_events(request):
+    # Only events whose post is approved
+    events = Event.objects.filter(post__status="approved").select_related("post")
+
+    data = []
+    for event in events:
+        item = {
+            "id": event.pk,
+            "title": event.post.title,
+            "start": event.start_time.isoformat(),
+        }
+        if event.end_time:
+            item["end"] = event.end_time.isoformat()
+        # Link to Neil's post detail page (skipped until his page is merged)
+        try:
+            item["url"] = reverse("board:post_detail", args=[event.post.id])
+        except NoReverseMatch:
+            pass
+        data.append(item)
+
+    return JsonResponse(data, safe=False)
+  
+  
 def home(request):
     # Get approved posts, newest first
     posts = Post.objects.filter(
@@ -107,6 +137,8 @@ def home(request):
             "categories": categories,
         }
     )
+  
+  
 def category_posts(request, category_id):
     # Find the selected category
     category = get_object_or_404(Category, pk=category_id)
@@ -125,6 +157,8 @@ def category_posts(request, category_id):
             "posts": posts,
         }
     )
+  
+  
 def submit_post_view(request):
     if request.method == "POST":
         form = PostForm(request.POST)
