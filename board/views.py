@@ -7,7 +7,7 @@ from django.views.decorators.http import require_http_methods
 
 from .edit_forms import PostEditForm
 from .edit_links import send_edit_link
-from .models import Post, Category, Subscriber
+from .models import Post, Category, Subscriber, Event
 from .post_forms import PostForm
 from .post_limits import PostRateLimitExceeded
 from .post_submission import CaptchaVerificationFailed, submit_post
