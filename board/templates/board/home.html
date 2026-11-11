@@ -1,0 +1,86 @@
+{% extends "board/base.html" %}
+
+{% block content %}
+
+<h1>Community Vision Board</h1>
+
+<p>
+    Welcome to the Community Vision Board!
+    Browse community posts, events, and opportunities.
+</p>
+
+<p>
+    <a href="{% url 'board:submit_post' %}">Create a Post</a>
+    |
+    <a href="{% url 'board:subscribe' %}">Get email updates</a>
+</p>
+
+<h2>Categories</h2>
+
+<ul>
+    {% for category in categories %}
+        <li>
+            <a href="{% url 'board:category_posts' category.id %}">
+                {{ category.name }}
+            </a>
+        </li>
+    {% empty %}
+        <li>No categories available.</li>
+    {% endfor %}
+</ul>
+
+<h2>Community Posts</h2>
+
+{% for post in posts %}
+
+    <div class="post">
+        <h3>{{ post.title }}</h3>
+
+        <p>{{ post.description }}</p>
+
+        <p>
+            <strong>Category:</strong>
+            {{ post.category.name }}
+        </p>
+
+        {% if post.location %}
+            <p>
+                <strong>Location:</strong>
+                {{ post.location }}
+            </p>
+        {% endif %}
+
+        <p>
+            <strong>Contact:</strong>
+            {% if post.contact_method == "email" %}
+                <a href="mailto:{{ post.contact_email }}">
+                    {{ post.contact_email }}
+                </a>
+            {% elif post.contact_method == "phone" %}
+                <a href="tel:{{ post.contact_phone }}">
+                    {{ post.contact_phone }}
+                </a>
+            {% endif %}
+        </p>
+
+        <p>
+            <a href="{% url 'board:report_post' post.id %}">
+                Report this post
+            </a>
+        </p>
+
+        <p>
+            <strong>Posted:</strong>
+            {{ post.created_at|date:"M d, Y" }}
+        </p>
+
+        <hr>
+    </div>
+
+{% empty %}
+
+    <p>No approved posts are available yet.</p>
+
+{% endfor %}
+
+{% endblock %}

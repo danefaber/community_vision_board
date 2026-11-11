@@ -1,0 +1,21 @@
+{% extends "board/base.html" %}
+
+{% block content %}
+<h1>Get Email Updates</h1>
+
+<p>
+    Get an email whenever a new post goes up on the Community Vision Board.
+</p>
+
+<form method="post">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit">Subscribe</button>
+</form>
+
+<p>
+    <a href="{% url 'board:home' %}">Back to Home</a>
+</p>
+{% endblock %}

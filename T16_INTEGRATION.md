@@ -15,7 +15,7 @@
 
 The following environment variables are required:
 
-- DJANGO_SECRET_KEY
+- SECRET_KEY
 - RECAPTCHA_SITE_KEY
 - RECAPTCHA_SECRET_KEY
 
@@ -42,13 +42,13 @@ Do not display private edit links on public post pages.
 
 - Configure real Google reCAPTCHA keys for the deployed domain.
 - Verify visitor IP identification behind the AWS proxy.
-- Configure the DJANGO_SECRET_KEY environment variable.
+- Configure the SECRET_KEY environment variable.
 - Use HTTPS for private edit links.
 - Ensure the old hard-coded Django secret key is not reused.
 
 ## Testing
 
-- All 31 automated tests passed.
+- All 40 automated tests passed.
 - MySQL concurrent submission test passed:
   5 accepted, 3 blocked, 0 unexpected errors.
 

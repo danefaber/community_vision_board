@@ -1,0 +1,20 @@
+
+{% extends "board/base.html" %}
+
+{% block content %}
+<h1>Post Submitted!</h1>
+
+<p>
+    Thanks! Your post is waiting for moderator review
+    (usually 1–2 days).
+</p>
+
+<p>
+    We emailed you a private link to edit your post,
+    so keep it safe.
+</p>
+
+<p>
+    <a href="{% url 'board:home' %}">Return to Home</a>
+</p>
+{% endblock %}

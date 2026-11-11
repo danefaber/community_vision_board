@@ -1,12 +1,18 @@
 from django.contrib import messages
 from django.http import JsonResponse
+from django.conf import settings
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import NoReverseMatch, reverse
 from django.views.decorators.http import require_http_methods
 
 from .edit_forms import PostEditForm
-from .models import Event, Post
+from .edit_links import send_edit_link
+from .models import Post, Category, Subscriber
+from .post_forms import PostForm
+from .post_limits import PostRateLimitExceeded
+from .post_submission import CaptchaVerificationFailed, submit_post
 from .report_forms import PostReportForm
+from .subscribe_forms import SubscribeForm
 
 @require_http_methods(["GET", "POST"])
 def report_post(request, post_id):
@@ -30,7 +36,7 @@ def report_post(request, post_id):
                 "Your report was submitted for moderator review."
             )
 
-            return redirect("board:report_post", post_id=post.pk)
+            return redirect("board:home")
 
     else:
         form = PostReportForm()
@@ -112,3 +118,95 @@ def calendar_events(request):
         data.append(item)
 
     return JsonResponse(data, safe=False)
+  
+  
+def home(request):
+    # Get approved posts, newest first
+    posts = Post.objects.filter(
+        status="approved"
+    ).order_by("-created_at")
+
+    # Get all categories
+    categories = Category.objects.all()
+
+    return render(
+        request,
+        "board/home.html",
+        {
+            "posts": posts,
+            "categories": categories,
+        }
+    )
+  
+  
+def category_posts(request, category_id):
+    # Find the selected category
+    category = get_object_or_404(Category, pk=category_id)
+
+    # Get approved posts in this category
+    posts = Post.objects.filter(
+        category=category,
+        status="approved"
+    ).order_by("-created_at")
+
+    return render(
+        request,
+        "board/category_posts.html",
+        {
+            "category": category,
+            "posts": posts,
+        }
+    )
+  
+  
+def submit_post_view(request):
+    if request.method == "POST":
+        form = PostForm(request.POST)
+
+        if form.is_valid():
+            try:
+                post = submit_post(request, lambda: form.save())
+            except CaptchaVerificationFailed:
+                form.add_error(None, "Please complete the CAPTCHA.")
+            except PostRateLimitExceeded:
+                form.add_error(
+                    None,
+                    "You've reached the limit of 5 posts per hour. Try again later."
+                )
+            else:
+                send_edit_link(request, post)
+                return redirect("board:post_submitted")
+    else:
+        form = PostForm()
+
+    return render(request, "board/submit_post.html", {
+        "form": form,
+        "recaptcha_site_key": settings.RECAPTCHA_SITE_KEY,
+    })
+
+
+def post_submitted(request):
+    return render(request, "board/post_submitted.html")
+
+def subscribe(request):
+    if request.method == "POST":
+        form = SubscribeForm(request.POST)
+
+        if form.is_valid():
+            email = form.cleaned_data["email"]
+            subscriber, created = Subscriber.objects.get_or_create(email=email)
+
+            # Someone who unsubscribed before can sign up again.
+            if not subscriber.active:
+                subscriber.active = True
+                subscriber.save(update_fields=["active"])
+
+            return redirect("board:subscribed")
+    else:
+        form = SubscribeForm()
+
+    return render(request, "board/subscribe.html", {"form": form})
+
+
+def subscribed(request):
+    return render(request, "board/subscribed.html")

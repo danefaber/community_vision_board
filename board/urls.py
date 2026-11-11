@@ -5,6 +5,11 @@ app_name = 'board'
 
 urlpatterns = [
     path(
+        "",
+        views.home,
+        name="home",
+    ),
+    path(
         "posts/<int:post_id>/report/",
         views.report_post,
         name="report_post",
@@ -16,4 +21,29 @@ urlpatterns = [
     ),
     path("calendar/", views.calendar_page, name="calendar"),
     path("calendar/events/", views.calendar_events, name="calendar_events"),
+    path(
+        "categories/<int:category_id>/",
+        views.category_posts,
+        name="category_posts",
+    ),
+    path(
+        "posts/new/",
+        views.submit_post_view,
+        name="submit_post",
+    ),
+    path(
+        "posts/submitted/",
+        views.post_submitted,
+        name="post_submitted",
+    ),
+    path(
+        "subscribe/",
+        views.subscribe,
+        name="subscribe",
+    ),
+    path(
+        "subscribe/done/",
+        views.subscribed,
+        name="subscribed",
+    ),
 ]

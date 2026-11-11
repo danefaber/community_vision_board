@@ -37,6 +37,8 @@ class PrivatePostEditingTests(TestCase):
             "location": self.post.location,
             "contact_name": self.post.contact_name,
             "contact_email": self.post.contact_email,
+	    "contact_method": self.post.contact_method,
+	    "contact_phone": self.post.contact_phone,
         }
         data.update(changes)
         return data
@@ -75,6 +77,24 @@ class PrivatePostEditingTests(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(self.post.title, "Updated Title")
         self.assertEqual(self.post.status, "pending")
+
+    def test_edit_contact_method_and_phone(self):
+        response = self.client.post(
+            self.url,
+            self.form_data(
+                contact_method="phone",
+                contact_phone="402-555-0123",
+            ),
+        )
+
+        self.post.refresh_from_db()
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(self.post.contact_method, "phone")
+        self.assertEqual(self.post.contact_phone, "402-555-0123")
+        self.assertEqual(self.post.status, "pending")
+
+
 
     def test_status_and_token_protected(self):
         original_token = self.post.edit_token
@@ -136,3 +156,22 @@ class PrivatePostEditingTests(TestCase):
             self.client.get(new_url).status_code,
             200,
         )
+
+    def test_phone_contact_requires_phone_number(self):
+        response = self.client.post(
+            self.url,
+            self.form_data(
+                contact_method="phone",
+                contact_phone="",
+            ),
+        )
+
+        self.post.refresh_from_db()
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(
+            response,
+            "Enter a phone number",
+        )
+        self.assertEqual(self.post.contact_method, "email")
+        self.assertEqual(self.post.status, "approved")

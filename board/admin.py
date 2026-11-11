@@ -17,11 +17,11 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ("title", "category", "status", "created_at")
-    list_filter = ("status", "category")
+    list_display = ("title", "category", "status", "is_resolved", "created_at")
+    list_filter = ("status", "is_resolved", "category")
     search_fields = ("title", "description", "location")
     ordering = ("created_at",)
-    readonly_fields = ("created_at",)
+    readonly_fields = ("created_at", "resolved_at")
     actions = ("approve_posts", "reject_posts")
 
     @admin.action(description="Approve selected pending posts")
