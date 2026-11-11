@@ -1,9 +1,14 @@
 from django.contrib import messages
+from django.conf import settings
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_http_methods
 
 from .edit_forms import PostEditForm
+from .edit_links import send_edit_link
 from .models import Post, Category
+from .post_forms import PostForm
+from .post_limits import PostRateLimitExceeded
+from .post_submission import CaptchaVerificationFailed, submit_post
 from .report_forms import PostReportForm
 
 @require_http_methods(["GET", "POST"])
@@ -119,3 +124,31 @@ def category_posts(request, category_id):
             "posts": posts,
         }
     )
+def submit_post_view(request):
+    if request.method == "POST":
+        form = PostForm(request.POST)
+
+        if form.is_valid():
+            try:
+                post = submit_post(request, lambda: form.save())
+            except CaptchaVerificationFailed:
+                form.add_error(None, "Please complete the CAPTCHA.")
+            except PostRateLimitExceeded:
+                form.add_error(
+                    None,
+                    "You've reached the limit of 5 posts per hour. Try again later."
+                )
+            else:
+                send_edit_link(request, post)
+                return redirect("board:post_submitted")
+    else:
+        form = PostForm()
+
+    return render(request, "board/submit_post.html", {
+        "form": form,
+        "recaptcha_site_key": settings.RECAPTCHA_SITE_KEY,
+    })
+
+
+def post_submitted(request):
+    return render(request, "board/post_submitted.html")

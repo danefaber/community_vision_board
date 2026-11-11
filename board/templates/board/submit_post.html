@@ -1,0 +1,26 @@
+
+{% extends "board/base.html" %}
+
+{% block content %}
+<h1>Create a Post</h1>
+
+<p>Fill out the form below to submit a post for moderator review.</p>
+
+<form method="post">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
+
+    <br>
+
+    <button type="submit">Submit Post</button>
+</form>
+
+<p>
+    <a href="{% url 'board:home' %}">Back to Home</a>
+</p>
+{% endblock %}

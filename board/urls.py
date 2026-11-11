@@ -20,8 +20,18 @@ urlpatterns = [
         name="edit_post",
     ),
     path(
-    "categories/<int:category_id>/",
-    views.category_posts,
-    name="category_posts",
+        "categories/<int:category_id>/",
+        views.category_posts,
+        name="category_posts",
+    ),
+    path(
+        "posts/new/",
+        views.submit_post_view,
+        name="submit_post",
+    ),
+    path(
+        "posts/submitted/",
+        views.post_submitted,
+        name="post_submitted",
     ),
 ]
