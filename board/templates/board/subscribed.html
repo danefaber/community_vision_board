@@ -1,0 +1,13 @@
+{% extends "board/base.html" %}
+
+{% block content %}
+<h1>You're Subscribed!</h1>
+
+<p>
+    You'll get an email whenever a new post is approved.
+</p>
+
+<p>
+    <a href="{% url 'board:home' %}">Return to Home</a>
+</p>
+{% endblock %}
