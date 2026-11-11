@@ -34,4 +34,14 @@ urlpatterns = [
         views.post_submitted,
         name="post_submitted",
     ),
+    path(
+        "subscribe/",
+        views.subscribe,
+        name="subscribe",
+    ),
+    path(
+        "subscribe/done/",
+        views.subscribed,
+        name="subscribed",
+    ),
 ]
