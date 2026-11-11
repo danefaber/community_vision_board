@@ -48,7 +48,7 @@ Do not display private edit links on public post pages.
 
 ## Testing
 
-- All 31 automated tests passed.
+- All 40 automated tests passed.
 - MySQL concurrent submission test passed:
   5 accepted, 3 blocked, 0 unexpected errors.
 
